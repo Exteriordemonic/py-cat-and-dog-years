@@ -62,6 +62,7 @@ def test_age_is_number(cat_years: object, dog_years: int) -> None:
 next_years_data = [
     (27, 27, [2, 2]),
     (28, 28, [3, 2]),
+    (28, 29, [3, 3]),
     (100, 100, [21, 17]),
 ]
 
