@@ -26,7 +26,7 @@ def get_human_age(cat_age: int, dog_age: int) -> list:
         if not isinstance(age, int):
             raise TypeError("Age need to be a number")
 
-        if age > 1_000_000:
+        if age >= 1_000_000:
             raise ValueError("Age is unrealistically large")
 
         animal_age = 0

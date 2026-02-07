@@ -3,24 +3,18 @@ import pytest
 from app.main import get_human_age
 
 
-def test_zero_age_returns_zero() -> None:
-    assert get_human_age(0, 0) == [0, 0]
-
-
-def test_under_15_years_returns_zero() -> None:
-    assert get_human_age(14, 14) == [0, 0]
-
-
-def test_15_yers_returns_1() -> None:
-    assert get_human_age(15, 15) == [1, 1]
-
-
-def test_under_24_years_returns_zero() -> None:
-    assert get_human_age(23, 23) == [1, 1]
-
-
-def test_24_yers_returns_2() -> None:
-    assert get_human_age(24, 24) == [2, 2]
+@pytest.mark.parametrize(
+    "cat_age,dog_age,expected",
+    [
+        (0, 0, [0, 0]),
+        (14, 14, [0, 0]),
+        (15, 15, [1, 1]),
+        (23, 23, [1, 1]),
+        (24, 24, [2, 2]),
+    ],
+)
+def test_various_age_cases(cat_age, dog_age, expected):
+    assert get_human_age(cat_age, dog_age) == expected
 
 
 testdata = [
@@ -32,6 +26,19 @@ testdata = [
 
 @pytest.mark.parametrize("cat_years,dog_years", testdata)
 def test_negative_age(cat_years: int, dog_years: int) -> None:
+    with pytest.raises(ValueError):
+        get_human_age(cat_years, dog_years)
+
+
+testdata = [
+    (1_000_000, 1),
+    (1, 1_000_000),
+    (1_000_000, 1_000_000),
+]
+
+
+@pytest.mark.parametrize("cat_years,dog_years", testdata)
+def test_very_large_number(cat_years: int, dog_years: int) -> None:
     with pytest.raises(ValueError):
         get_human_age(cat_years, dog_years)
 
